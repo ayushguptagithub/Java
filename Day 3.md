@@ -1,0 +1,876 @@
+### ✅ **Stack Implementation in Java**
+
+```java
+import java.util.Scanner;
+
+class Stack {
+    private int maxSize;
+    private int[] stackArray;
+    private int top;
+
+    // Constructor
+    public Stack(int size) {
+        maxSize = size;
+        stackArray = new int[maxSize];
+        top = -1; // initially, stack is empty
+    }
+
+    // Push operation
+    public void push(int value) {
+        if (isFull()) {
+            System.out.println("Stack Overflow! Cannot push " + value);
+        } else {
+            stackArray[++top] = value;
+            System.out.println("Pushed: " + value);
+        }
+    }
+
+    // Pop operation
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println("Stack Underflow! Cannot pop.");
+            return -1;
+        } else {
+            return stackArray[top--];
+        }
+    }
+
+    // Peek operation
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty.");
+            return -1;
+        } else {
+            return stackArray[top];
+        }
+    }
+
+    // Check if stack is empty
+    public boolean isEmpty() {
+        return (top == -1);
+    }
+
+    // Check if stack is full
+    public boolean isFull() {
+        return (top == maxSize - 1);
+    }
+
+    // Display the stack
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Stack is empty.");
+        } else {
+            System.out.print("Stack contents: ");
+            for (int i = 0; i <= top; i++) {
+                System.out.print(stackArray[i] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+// Main class to use the stack
+public class StackDemo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter stack size: ");
+        int size = sc.nextInt();
+
+        Stack myStack = new Stack(size);
+
+        while (true) {
+            System.out.println("\nChoose operation:");
+            System.out.println("1. Push\n2. Pop\n3. Peek\n4. Display\n5. Exit");
+            System.out.print("Enter choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter value to push: ");
+                    int val = sc.nextInt();
+                    myStack.push(val);
+                    break;
+                case 2:
+                    int popped = myStack.pop();
+                    if (popped != -1)
+                        System.out.println("Popped: " + popped);
+                    break;
+                case 3:
+                    int top = myStack.peek();
+                    if (top != -1)
+                        System.out.println("Top Element: " + top);
+                    break;
+                case 4:
+                    myStack.display();
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
+}
+```
+
+---
+
+### 💡 Output Example
+
+```
+Enter stack size: 3
+
+Choose operation:
+1. Push
+2. Pop
+3. Peek
+4. Display
+5. Exit
+Enter choice: 1
+Enter value to push: 10
+Pushed: 10
+
+Enter choice: 1
+Enter value to push: 20
+Pushed: 20
+
+Enter choice: 4
+Stack contents: 10 20
+
+Enter choice: 3
+Top Element: 20
+
+Enter choice: 2
+Popped: 20
+```
+
+---
+
+### ✅ **Queue Implementation in Java (Using Array)**
+
+```java
+import java.util.Scanner;
+
+class Queue {
+    private int maxSize;
+    private int[] queueArray;
+    private int front;
+    private int rear;
+
+    // Constructor
+    public Queue(int size) {
+        maxSize = size;
+        queueArray = new int[maxSize];
+        front = 0;
+        rear = -1;
+    }
+
+    // Enqueue (insert) operation
+    public void enqueue(int value) {
+        if (isFull()) {
+            System.out.println("Queue Overflow! Cannot insert " + value);
+        } else {
+            queueArray[++rear] = value;
+            System.out.println("Inserted: " + value);
+        }
+    }
+
+    // Dequeue (remove) operation
+    public int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue Underflow! Cannot remove element.");
+            return -1;
+        } else {
+            int removed = queueArray[front++];
+            return removed;
+        }
+    }
+
+    // Peek front element
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty.");
+            return -1;
+        } else {
+            return queueArray[front];
+        }
+    }
+
+    // Check if queue is empty
+    public boolean isEmpty() {
+        return front > rear;
+    }
+
+    // Check if queue is full
+    public boolean isFull() {
+        return rear == maxSize - 1;
+    }
+
+    // Display the queue
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty.");
+        } else {
+            System.out.print("Queue elements: ");
+            for (int i = front; i <= rear; i++) {
+                System.out.print(queueArray[i] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+// Main class
+public class QueueDemo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter queue size: ");
+        int size = sc.nextInt();
+
+        Queue myQueue = new Queue(size);
+
+        while (true) {
+            System.out.println("\nChoose operation:");
+            System.out.println("1. Enqueue\n2. Dequeue\n3. Peek\n4. Display\n5. Exit");
+            System.out.print("Enter choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter value to insert: ");
+                    int val = sc.nextInt();
+                    myQueue.enqueue(val);
+                    break;
+                case 2:
+                    int removed = myQueue.dequeue();
+                    if (removed != -1)
+                        System.out.println("Removed: " + removed);
+                    break;
+                case 3:
+                    int front = myQueue.peek();
+                    if (front != -1)
+                        System.out.println("Front Element: " + front);
+                    break;
+                case 4:
+                    myQueue.display();
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
+}
+```
+
+---
+
+### 📝 Sample Output
+
+```
+Enter queue size: 3
+
+Choose operation:
+1. Enqueue
+2. Dequeue
+3. Peek
+4. Display
+5. Exit
+Enter choice: 1
+Enter value to insert: 10
+Inserted: 10
+
+Enter choice: 1
+Enter value to insert: 20
+Inserted: 20
+
+Enter choice: 4
+Queue elements: 10 20
+
+Enter choice: 2
+Removed: 10
+
+Enter choice: 3
+Front Element: 20
+```
+
+---
+
+### ✅ Circular Queue 
+
+```java
+import java.util.Scanner;
+
+class CircularQueue {
+    private int[] queue;
+    private int front, rear, size, capacity;
+
+    public CircularQueue(int capacity) {
+        this.capacity = capacity;
+        queue = new int[capacity];
+        front = -1;
+        rear = -1;
+        size = 0;
+    }
+
+    public void enqueue(int value) {
+        if (isFull()) {
+            System.out.println("Queue is Full! Cannot insert " + value);
+        } else if (isEmpty()) {
+            front = rear = 0;
+            queue[rear] = value;
+            size++;
+            System.out.println("Inserted: " + value);
+        } else if (rear == capacity - 1 && front != 0) {
+            rear = 0;
+            queue[rear] = value;
+            size++;
+            System.out.println("Inserted: " + value);
+        } else if (rear < capacity - 1) {
+            rear = rear + 1;
+            queue[rear] = value;
+            size++;
+            System.out.println("Inserted: " + value);
+        } else {
+            System.out.println("Cannot insert " + value + ", queue is in an invalid state.");
+        }
+    }
+
+    public int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty! Cannot remove.");
+            return -1;
+        } else if (front == rear) {
+            int value = queue[front];
+            front = rear = -1;
+            size--;
+            return value;
+        } else if (front == capacity - 1) {
+            int value = queue[front];
+            front = 0;
+            size--;
+            return value;
+        } else {
+            int value = queue[front];
+            front = front + 1;
+            size--;
+            return value;
+        }
+    }
+
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty!");
+            return -1;
+        } else {
+            return queue[front];
+        }
+    }
+
+    public boolean isFull() {
+        return (size == capacity);
+    }
+
+    public boolean isEmpty() {
+        return (size == 0);
+    }
+
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty.");
+        } else {
+            System.out.print("Queue elements: ");
+            int i = front;
+            int count = 0;
+
+            while (count < size) {
+                System.out.print(queue[i] + " ");
+                if (i == capacity - 1) {
+                    i = 0;
+                } else {
+                    i = i + 1;
+                }
+                count++;
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+---
+
+### 🧪 Main Class to Run
+
+```java
+public class CircularQueueMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Circular Queue size: ");
+        int size = sc.nextInt();
+
+        CircularQueue cq = new CircularQueue(size);
+
+        while (true) {
+            System.out.println("\nChoose operation:");
+            System.out.println("1. Enqueue\n2. Dequeue\n3. Peek\n4. Display\n5. Exit");
+            System.out.print("Enter choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter value to insert: ");
+                    int val = sc.nextInt();
+                    cq.enqueue(val);
+                    break;
+                case 2:
+                    int removed = cq.dequeue();
+                    if (removed != -1)
+                        System.out.println("Removed: " + removed);
+                    break;
+                case 3:
+                    int front = cq.peek();
+                    if (front != -1)
+                        System.out.println("Front Element: " + front);
+                    break;
+                case 4:
+                    cq.display();
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
+}
+```
+
+---
+
+
+### 🔁 **Deque Implementation in Java** 
+
+```java
+import java.util.Scanner;
+
+class Deque {
+    private int[] deque;
+    private int front, rear, size, capacity;
+
+    public Deque(int capacity) {
+        this.capacity = capacity;
+        deque = new int[capacity];
+        front = -1;
+        rear = -1;
+        size = 0;
+    }
+
+    // Insert at front
+    public void insertFront(int value) {
+        if (isFull()) {
+            System.out.println("Deque is Full! Cannot insert at front.");
+        } else if (isEmpty()) {
+            front = rear = 0;
+            deque[front] = value;
+            size++;
+            System.out.println("Inserted at front: " + value);
+        } else if (front == 0) {
+            front = capacity - 1;
+            deque[front] = value;
+            size++;
+            System.out.println("Inserted at front: " + value);
+        } else {
+            front = front - 1;
+            deque[front] = value;
+            size++;
+            System.out.println("Inserted at front: " + value);
+        }
+    }
+
+    // Insert at rear
+    public void insertRear(int value) {
+        if (isFull()) {
+            System.out.println("Deque is Full! Cannot insert at rear.");
+        } else if (isEmpty()) {
+            front = rear = 0;
+            deque[rear] = value;
+            size++;
+            System.out.println("Inserted at rear: " + value);
+        } else if (rear == capacity - 1) {
+            rear = 0;
+            deque[rear] = value;
+            size++;
+            System.out.println("Inserted at rear: " + value);
+        } else {
+            rear = rear + 1;
+            deque[rear] = value;
+            size++;
+            System.out.println("Inserted at rear: " + value);
+        }
+    }
+
+    // Delete from front
+    public int deleteFront() {
+        if (isEmpty()) {
+            System.out.println("Deque is Empty! Cannot delete from front.");
+            return -1;
+        } else if (front == rear) {
+            int value = deque[front];
+            front = rear = -1;
+            size--;
+            return value;
+        } else if (front == capacity - 1) {
+            int value = deque[front];
+            front = 0;
+            size--;
+            return value;
+        } else {
+            int value = deque[front];
+            front = front + 1;
+            size--;
+            return value;
+        }
+    }
+
+    // Delete from rear
+    public int deleteRear() {
+        if (isEmpty()) {
+            System.out.println("Deque is Empty! Cannot delete from rear.");
+            return -1;
+        } else if (front == rear) {
+            int value = deque[rear];
+            front = rear = -1;
+            size--;
+            return value;
+        } else if (rear == 0) {
+            int value = deque[rear];
+            rear = capacity - 1;
+            size--;
+            return value;
+        } else {
+            int value = deque[rear];
+            rear = rear - 1;
+            size--;
+            return value;
+        }
+    }
+
+    // Display all elements
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Deque is Empty.");
+        } else {
+            System.out.print("Deque elements: ");
+            int i = front;
+            int count = 0;
+            while (count < size) {
+                System.out.print(deque[i] + " ");
+                if (i == capacity - 1) {
+                    i = 0;
+                } else {
+                    i++;
+                }
+                count++;
+            }
+            System.out.println();
+        }
+    }
+
+    public boolean isFull() {
+        return size == capacity;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+}
+```
+
+---
+
+### 📌 **Main Class to Test Deque**
+
+```java
+public class DequeMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter size of Deque: ");
+        int size = sc.nextInt();
+
+        Deque dq = new Deque(size);
+
+        while (true) {
+            System.out.println("\nChoose operation:");
+            System.out.println("1. Insert Front\n2. Insert Rear\n3. Delete Front\n4. Delete Rear\n5. Display\n6. Exit");
+            System.out.print("Enter choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter value to insert at front: ");
+                    dq.insertFront(sc.nextInt());
+                    break;
+                case 2:
+                    System.out.print("Enter value to insert at rear: ");
+                    dq.insertRear(sc.nextInt());
+                    break;
+                case 3:
+                    int dFront = dq.deleteFront();
+                    if (dFront != -1) System.out.println("Deleted from front: " + dFront);
+                    break;
+                case 4:
+                    int dRear = dq.deleteRear();
+                    if (dRear != -1) System.out.println("Deleted from rear: " + dRear);
+                    break;
+                case 5:
+                    dq.display();
+                    break;
+                case 6:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
+}
+```
+
+---
+
+### 🧠 Output Example
+
+```
+Enter size of Deque: 4
+1. Insert Rear → 10
+2. Insert Rear → 20
+3. Insert Front → 5
+4. Display → 5 10 20
+5. Delete Rear → 20
+6. Delete Front → 5
+7. Display → 10
+```
+
+---
+
+### ✅ Singly Linked List with Position-Based Operations
+
+```java
+import java.util.Scanner;
+
+// Node class
+class Node {
+    int data;
+    Node next;
+
+    Node(int value) {
+        data = value;
+        next = null;
+    }
+}
+
+// Singly Linked List class
+class SinglyLinkedList {
+    private Node head;
+
+    // Insert at beginning
+    public void insertAtBeginning(int value) {
+        Node newNode = new Node(value);
+
+        if (head == null) {
+            head = newNode;
+        } else {
+            newNode.next = head;
+            head = newNode;
+        }
+
+        System.out.println("Inserted at beginning: " + value);
+    }
+
+    // Insert at end
+    public void insertAtEnd(int value) {
+        Node newNode = new Node(value);
+
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
+        }
+
+        System.out.println("Inserted at end: " + value);
+    }
+
+    // Insert at specific position
+    public void insertAtPosition(int value, int pos) {
+        Node newNode = new Node(value);
+
+        if (pos <= 0) {
+            System.out.println("Invalid position.");
+        } else if (pos == 1) {
+            insertAtBeginning(value);
+        } else {
+            Node temp = head;
+            int i = 1;
+            while (temp != null && i < pos - 1) {
+                temp = temp.next;
+                i++;
+            }
+
+            if (temp == null) {
+                System.out.println("Position out of range.");
+            } else {
+                newNode.next = temp.next;
+                temp.next = newNode;
+                System.out.println("Inserted " + value + " at position " + pos);
+            }
+        }
+    }
+
+    // Delete from beginning
+    public void deleteFromBeginning() {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else {
+            System.out.println("Deleted from beginning: " + head.data);
+            head = head.next;
+        }
+    }
+
+    // Delete from end
+    public void deleteFromEnd() {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else if (head.next == null) {
+            System.out.println("Deleted from end: " + head.data);
+            head = null;
+        } else {
+            Node temp = head;
+            while (temp.next.next != null) {
+                temp = temp.next;
+            }
+            System.out.println("Deleted from end: " + temp.next.data);
+            temp.next = null;
+        }
+    }
+
+    // Delete from specific position
+    public void deleteFromPosition(int pos) {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else if (pos <= 0) {
+            System.out.println("Invalid position.");
+        } else if (pos == 1) {
+            deleteFromBeginning();
+        } else {
+            Node temp = head;
+            int i = 1;
+
+            while (temp != null && i < pos - 1) {
+                temp = temp.next;
+                i++;
+            }
+
+            if (temp == null || temp.next == null) {
+                System.out.println("Position out of range.");
+            } else {
+                System.out.println("Deleted from position " + pos + ": " + temp.next.data);
+                temp.next = temp.next.next;
+            }
+        }
+    }
+
+    // Display the list
+    public void display() {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else {
+            Node temp = head;
+            System.out.print("Linked List: ");
+            while (temp != null) {
+                System.out.print(temp.data + " -> ");
+                temp = temp.next;
+            }
+            System.out.println("null");
+        }
+    }
+}
+```
+
+---
+
+### 🧪 Main Class to Test
+
+```java
+public class SinglyLinkedListMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        SinglyLinkedList list = new SinglyLinkedList();
+
+        while (true) {
+            System.out.println("\nChoose operation:");
+            System.out.println("1. Insert at Beginning");
+            System.out.println("2. Insert at End");
+            System.out.println("3. Insert at Position");
+            System.out.println("4. Delete from Beginning");
+            System.out.println("5. Delete from End");
+            System.out.println("6. Delete from Position");
+            System.out.println("7. Display");
+            System.out.println("8. Exit");
+            System.out.print("Enter choice: ");
+
+            int choice = sc.nextInt();
+
+            if (choice == 1) {
+                System.out.print("Enter value: ");
+                list.insertAtBeginning(sc.nextInt());
+            } else if (choice == 2) {
+                System.out.print("Enter value: ");
+                list.insertAtEnd(sc.nextInt());
+            } else if (choice == 3) {
+                System.out.print("Enter value: ");
+                int value = sc.nextInt();
+                System.out.print("Enter position: ");
+                int pos = sc.nextInt();
+                list.insertAtPosition(value, pos);
+            } else if (choice == 4) {
+                list.deleteFromBeginning();
+            } else if (choice == 5) {
+                list.deleteFromEnd();
+            } else if (choice == 6) {
+                System.out.print("Enter position to delete: ");
+                list.deleteFromPosition(sc.nextInt());
+            } else if (choice == 7) {
+                list.display();
+            } else if (choice == 8) {
+                System.out.println("Exiting...");
+                break;
+            } else {
+                System.out.println("Invalid choice.");
+            }
+        }
+    }
+}
+```
+
+---
+
+### 🧠 Sample Output
+
+```
+1. Insert at Beginning → 10
+2. Insert at End → 30
+3. Insert at Position (20 at 2) → 10 -> 20 -> 30
+4. Delete from Position 2 → 10 -> 30
+5. Display → 10 -> 30 -> null
+```
+
+---
