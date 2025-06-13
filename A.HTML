@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Doubly Circular Linked List Visualizer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    .list-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .node {
+      background: #4a90e2;
+      color: white;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 10px;
+      position: relative;
+      min-width: 60px;
+    }
+
+    .arrow {
+      position: relative;
+      margin: 10px;
+      font-size: 18px;
+    }
+
+    .node::before {
+      content: '⮘';
+      position: absolute;
+      left: -25px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #333;
+    }
+
+    .node::after {
+      content: '⮚';
+      position: absolute;
+      right: -25px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #333;
+    }
+
+    input, button {
+      margin: 5px;
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    #output {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .wrap {
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Doubly Circular Linked List Visualizer</h2>
+
+<input type="number" id="value" placeholder="Enter value">
+<input type="number" id="position" placeholder="Position (opt)">
+<br>
+<button onclick="insertBeginning()">Insert at Beginning</button>
+<button onclick="insertEnd()">Insert at End</button>
+<button onclick="insertAtPosition()">Insert at Position</button>
+<br>
+<button onclick="deleteBeginning()">Delete Beginning</button>
+<button onclick="deleteEnd()">Delete End</button>
+<button onclick="deleteFromPosition()">Delete at Position</button>
+<br>
+<button onclick="displayReverse()">Display Reverse</button>
+<button onclick="resetList()">Reset</button>
+
+<div id="output"></div>
+<div class="list-container" id="list"></div>
+
+<script>
+class DCNode {
+  constructor(data) {
+    this.data = data;
+    this.next = null;
+    this.prev = null;
+  }
+}
+
+class DoublyCircularLinkedList {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+  }
+
+  insertAtBeginning(value) {
+    const newNode = new DCNode(value);
+    if (!this.head) {
+      this.head = this.tail = newNode;
+      newNode.next = newNode.prev = newNode;
+    } else {
+      newNode.next = this.head;
+      newNode.prev = this.tail;
+      this.head.prev = newNode;
+      this.tail.next = newNode;
+      this.head = newNode;
+    }
+    this.display();
+  }
+
+  insertAtEnd(value) {
+    const newNode = new DCNode(value);
+    if (!this.head) {
+      this.insertAtBeginning(value);
+    } else {
+      newNode.prev = this.tail;
+      newNode.next = this.head;
+      this.tail.next = newNode;
+      this.head.prev = newNode;
+      this.tail = newNode;
+    }
+    this.display();
+  }
+
+  insertAtPosition(value, position) {
+    if (position <= 1) {
+      this.insertAtBeginning(value);
+    } else {
+      let current = this.head;
+      let i = 1;
+      while (i < position - 1 && current.next !== this.head) {
+        current = current.next;
+        i++;
+      }
+      if (i < position - 1) {
+        alert("Position out of range");
+        return;
+      }
+      const newNode = new DCNode(value);
+      newNode.next = current.next;
+      newNode.prev = current;
+      current.next.prev = newNode;
+      current.next = newNode;
+      if (current === this.tail) {
+        this.tail = newNode;
+      }
+      this.display();
+    }
+  }
+
+  deleteFromBeginning() {
+    if (!this.head) {
+      alert("List is empty");
+    } else if (this.head === this.tail) {
+      this.head = this.tail = null;
+    } else {
+      this.head = this.head.next;
+      this.head.prev = this.tail;
+      this.tail.next = this.head;
+    }
+    this.display();
+  }
+
+  deleteFromEnd() {
+    if (!this.head) {
+      alert("List is empty");
+    } else if (this.head === this.tail) {
+      this.head = this.tail = null;
+    } else {
+      this.tail = this.tail.prev;
+      this.tail.next = this.head;
+      this.head.prev = this.tail;
+    }
+    this.display();
+  }
+
+  deleteFromPosition(position) {
+    if (!this.head) {
+      alert("List is empty");
+    } else if (position <= 1) {
+      this.deleteFromBeginning();
+    } else {
+      let current = this.head;
+      let i = 1;
+      while (i < position && current.next !== this.head) {
+        current = current.next;
+        i++;
+      }
+      if (i < position) {
+        alert("Position out of range");
+        return;
+      }
+      current.prev.next = current.next;
+      current.next.prev = current.prev;
+      if (current === this.tail) {
+        this.tail = current.prev;
+      }
+      this.display();
+    }
+  }
+
+  display(reverse = false) {
+    const container = document.getElementById("list");
+    container.innerHTML = "";
+
+    if (!this.head) {
+      container.innerHTML = "<p>List is empty.</p>";
+      return;
+    }
+
+    const nodes = [];
+    let current = reverse ? this.tail : this.head;
+    do {
+      nodes.push(current.data);
+      current = reverse ? current.prev : current.next;
+    } while ((reverse ? current !== this.tail : current !== this.head));
+
+    nodes.forEach((val) => {
+      const nodeDiv = document.createElement("div");
+      nodeDiv.className = "node";
+      nodeDiv.innerText = val;
+      container.appendChild(nodeDiv);
+    });
+
+    document.getElementById("output").innerText = reverse ? "Displayed in reverse order" : "Displayed in forward order";
+  }
+
+  reset() {
+    this.head = this.tail = null;
+    this.display();
+  }
+}
+
+// Instantiate
+const list = new DoublyCircularLinkedList();
+
+// UI functions
+function getValue() {
+  return parseInt(document.getElementById("value").value);
+}
+
+function getPosition() {
+  return parseInt(document.getElementById("position").value);
+}
+
+function insertBeginning() {
+  const val = getValue();
+  if (!isNaN(val)) list.insertAtBeginning(val);
+}
+
+function insertEnd() {
+  const val = getValue();
+  if (!isNaN(val)) list.insertAtEnd(val);
+}
+
+function insertAtPosition() {
+  const val = getValue();
+  const pos = getPosition();
+  if (!isNaN(val) && !isNaN(pos)) list.insertAtPosition(val, pos);
+}
+
+function deleteBeginning() {
+  list.deleteFromBeginning();
+}
+
+function deleteEnd() {
+  list.deleteFromEnd();
+}
+
+function deleteFromPosition() {
+  const pos = getPosition();
+  if (!isNaN(pos)) list.deleteFromPosition(pos);
+}
+
+function displayReverse() {
+  list.display(true);
+}
+
+function resetList() {
+  list.reset();
+}
+</script>
+</body>
+</html>

@@ -299,7 +299,7 @@ Front Element: 20
 
 ---
 
-### ✅ Circular Queue 
+### ✅ Circular Queue
 
 ```java
 import java.util.Scanner;
@@ -452,8 +452,7 @@ public class CircularQueueMain {
 
 ---
 
-
-### 🔁 **Deque Implementation in Java** 
+### 🔁 **Deque Implementation in Java**
 
 ```java
 import java.util.Scanner;
@@ -871,6 +870,521 @@ public class SinglyLinkedListMain {
 3. Insert at Position (20 at 2) → 10 -> 20 -> 30
 4. Delete from Position 2 → 10 -> 30
 5. Display → 10 -> 30 -> null
+```
+
+---
+
+# Circular Linked List Code (Java)
+
+### ✅ Features:
+
+* Insert at beginning
+* Insert at end
+* Insert at position
+* Delete from beginning
+* Delete from end
+* Delete from position
+* Display the circular list
+
+All nodes are connected in a circle: the  **last node points back to the first** .
+
+---
+
+### 🔁 **Circular Linked List Code (Java)**
+
+```java
+import java.util.Scanner;
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int value) {
+        data = value;
+        next = null;
+    }
+}
+
+class CircularLinkedList {
+    private Node head = null;
+    private Node tail = null;
+
+    // Insert at beginning
+    public void insertAtBeginning(int value) {
+        Node newNode = new Node(value);
+
+        if (head == null) {
+            head = tail = newNode;
+            tail.next = head;
+        } else {
+            newNode.next = head;
+            head = newNode;
+            tail.next = head;
+        }
+
+        System.out.println("Inserted at beginning: " + value);
+    }
+
+    // Insert at end
+    public void insertAtEnd(int value) {
+        Node newNode = new Node(value);
+
+        if (head == null) {
+            head = tail = newNode;
+            tail.next = head;
+        } else {
+            tail.next = newNode;
+            tail = newNode;
+            tail.next = head;
+        }
+
+        System.out.println("Inserted at end: " + value);
+    }
+
+    // Insert at position
+    public void insertAtPosition(int value, int pos) {
+        Node newNode = new Node(value);
+
+        if (pos <= 0) {
+            System.out.println("Invalid position.");
+        } else if (pos == 1) {
+            insertAtBeginning(value);
+        } else {
+            Node temp = head;
+            int i = 1;
+
+            while (i < pos - 1 && temp.next != head) {
+                temp = temp.next;
+                i++;
+            }
+
+            if (temp.next == head && i < pos - 1) {
+                System.out.println("Position out of range.");
+            } else {
+                newNode.next = temp.next;
+                temp.next = newNode;
+
+                if (temp == tail) {
+                    tail = newNode;
+                }
+
+                System.out.println("Inserted " + value + " at position " + pos);
+            }
+        }
+    }
+
+    // Delete from beginning
+    public void deleteFromBeginning() {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else if (head == tail) {
+            System.out.println("Deleted from beginning: " + head.data);
+            head = tail = null;
+        } else {
+            System.out.println("Deleted from beginning: " + head.data);
+            head = head.next;
+            tail.next = head;
+        }
+    }
+
+    // Delete from end
+    public void deleteFromEnd() {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else if (head == tail) {
+            System.out.println("Deleted from end: " + head.data);
+            head = tail = null;
+        } else {
+            Node temp = head;
+            while (temp.next != tail) {
+                temp = temp.next;
+            }
+            System.out.println("Deleted from end: " + tail.data);
+            tail = temp;
+            tail.next = head;
+        }
+    }
+
+    // Delete from position
+    public void deleteFromPosition(int pos) {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else if (pos <= 0) {
+            System.out.println("Invalid position.");
+        } else if (pos == 1) {
+            deleteFromBeginning();
+        } else {
+            Node temp = head;
+            int i = 1;
+
+            while (i < pos - 1 && temp.next != head) {
+                temp = temp.next;
+                i++;
+            }
+
+            if (temp.next == head || temp.next == null) {
+                System.out.println("Position out of range.");
+            } else {
+                Node toDelete = temp.next;
+                System.out.println("Deleted from position " + pos + ": " + toDelete.data);
+                temp.next = toDelete.next;
+
+                if (toDelete == tail) {
+                    tail = temp;
+                }
+            }
+        }
+    }
+
+    // Display list
+    public void display() {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else {
+            Node temp = head;
+            System.out.print("Circular List: ");
+            do {
+                System.out.print(temp.data + " -> ");
+                temp = temp.next;
+            } while (temp != head);
+            System.out.println("(back to head)");
+        }
+    }
+}
+```
+
+---
+
+### 💡 Main Class to Use the Circular List
+
+```java
+public class CircularLinkedListMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        CircularLinkedList list = new CircularLinkedList();
+
+        while (true) {
+            System.out.println("\n--- Circular Linked List Menu ---");
+            System.out.println("1. Insert at Beginning");
+            System.out.println("2. Insert at End");
+            System.out.println("3. Insert at Position");
+            System.out.println("4. Delete from Beginning");
+            System.out.println("5. Delete from End");
+            System.out.println("6. Delete from Position");
+            System.out.println("7. Display");
+            System.out.println("8. Exit");
+            System.out.print("Enter choice: ");
+            int choice = sc.nextInt();
+
+            if (choice == 1) {
+                System.out.print("Enter value: ");
+                list.insertAtBeginning(sc.nextInt());
+            } else if (choice == 2) {
+                System.out.print("Enter value: ");
+                list.insertAtEnd(sc.nextInt());
+            } else if (choice == 3) {
+                System.out.print("Enter value: ");
+                int value = sc.nextInt();
+                System.out.print("Enter position: ");
+                int pos = sc.nextInt();
+                list.insertAtPosition(value, pos);
+            } else if (choice == 4) {
+                list.deleteFromBeginning();
+            } else if (choice == 5) {
+                list.deleteFromEnd();
+            } else if (choice == 6) {
+                System.out.print("Enter position: ");
+                list.deleteFromPosition(sc.nextInt());
+            } else if (choice == 7) {
+                list.display();
+            } else if (choice == 8) {
+                System.out.println("Exiting...");
+                break;
+            } else {
+                System.out.println("Invalid choice.");
+            }
+        }
+    }
+}
+```
+
+---
+
+### 🧠 Sample Output
+
+```
+1. Insert at Beginning → 10
+2. Insert at End → 20
+3. Insert at Position (15 at 2) → 10 -> 15 -> 20 -> (back to head)
+4. Delete from Position 2 → 10 -> 20 -> (back to head)
+```
+
+# Doubly Circular Linked List (Java Code)
+
+### ✅ Features Included:
+
+* Insert at beginning
+* Insert at end
+* Insert at any position
+* Delete from beginning
+* Delete from end
+* Delete from any position
+* Display forward and reverse
+
+---
+
+### 🔄 **Doubly Circular Linked List (Java Code)**
+
+```java
+import java.util.Scanner;
+
+class DCNode {
+    int data;
+    DCNode next;
+    DCNode prev;
+
+    DCNode(int value) {
+        data = value;
+        next = null;
+        prev = null;
+    }
+}
+
+class DoublyCircularLinkedList {
+    private DCNode head = null;
+    private DCNode tail = null;
+
+    // Insert at beginning
+    public void insertAtBeginning(int value) {
+        DCNode newNode = new DCNode(value);
+
+        if (head == null) {
+            head = tail = newNode;
+            head.next = head.prev = head;
+        } else {
+            newNode.next = head;
+            newNode.prev = tail;
+            head.prev = newNode;
+            tail.next = newNode;
+            head = newNode;
+        }
+
+        System.out.println("Inserted at beginning: " + value);
+    }
+
+    // Insert at end
+    public void insertAtEnd(int value) {
+        DCNode newNode = new DCNode(value);
+
+        if (head == null) {
+            head = tail = newNode;
+            head.next = head.prev = head;
+        } else {
+            newNode.prev = tail;
+            newNode.next = head;
+            tail.next = newNode;
+            head.prev = newNode;
+            tail = newNode;
+        }
+
+        System.out.println("Inserted at end: " + value);
+    }
+
+    // Insert at any position
+    public void insertAtPosition(int value, int pos) {
+        DCNode newNode = new DCNode(value);
+
+        if (pos <= 0) {
+            System.out.println("Invalid position.");
+        } else if (pos == 1) {
+            insertAtBeginning(value);
+        } else {
+            DCNode temp = head;
+            int i = 1;
+
+            while (i < pos - 1 && temp.next != head) {
+                temp = temp.next;
+                i++;
+            }
+
+            if (i < pos - 1) {
+                System.out.println("Position out of range.");
+            } else {
+                newNode.next = temp.next;
+                newNode.prev = temp;
+                temp.next.prev = newNode;
+                temp.next = newNode;
+
+                if (temp == tail) {
+                    tail = newNode;
+                }
+
+                System.out.println("Inserted " + value + " at position " + pos);
+            }
+        }
+    }
+
+    // Delete from beginning
+    public void deleteFromBeginning() {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else if (head == tail) {
+            System.out.println("Deleted from beginning: " + head.data);
+            head = tail = null;
+        } else {
+            System.out.println("Deleted from beginning: " + head.data);
+            head = head.next;
+            head.prev = tail;
+            tail.next = head;
+        }
+    }
+
+    // Delete from end
+    public void deleteFromEnd() {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else if (head == tail) {
+            System.out.println("Deleted from end: " + tail.data);
+            head = tail = null;
+        } else {
+            System.out.println("Deleted from end: " + tail.data);
+            tail = tail.prev;
+            tail.next = head;
+            head.prev = tail;
+        }
+    }
+
+    // Delete from any position
+    public void deleteFromPosition(int pos) {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else if (pos <= 0) {
+            System.out.println("Invalid position.");
+        } else if (pos == 1) {
+            deleteFromBeginning();
+        } else {
+            DCNode temp = head;
+            int i = 1;
+
+            while (i < pos && temp.next != head) {
+                temp = temp.next;
+                i++;
+            }
+
+            if (i < pos) {
+                System.out.println("Position out of range.");
+            } else {
+                System.out.println("Deleted from position " + pos + ": " + temp.data);
+                temp.prev.next = temp.next;
+                temp.next.prev = temp.prev;
+
+                if (temp == tail) {
+                    tail = temp.prev;
+                }
+            }
+        }
+    }
+
+    // Display forward
+    public void displayForward() {
+        if (head == null) {
+            System.out.println("List is empty.");
+        } else {
+            DCNode temp = head;
+            System.out.print("Forward: ");
+            do {
+                System.out.print(temp.data + " <-> ");
+                temp = temp.next;
+            } while (temp != head);
+            System.out.println("(head)");
+        }
+    }
+
+    // Display reverse
+    public void displayReverse() {
+        if (tail == null) {
+            System.out.println("List is empty.");
+        } else {
+            DCNode temp = tail;
+            System.out.print("Reverse: ");
+            do {
+                System.out.print(temp.data + " <-> ");
+                temp = temp.prev;
+            } while (temp != tail);
+            System.out.println("(tail)");
+        }
+    }
+}
+```
+
+---
+
+### 🧪 Main Class to Test the Doubly Circular Linked List
+
+```java
+public class DoublyCircularLinkedListMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        DoublyCircularLinkedList list = new DoublyCircularLinkedList();
+
+        while (true) {
+            System.out.println("\n--- Doubly Circular Linked List Menu ---");
+            System.out.println("1. Insert at Beginning");
+            System.out.println("2. Insert at End");
+            System.out.println("3. Insert at Position");
+            System.out.println("4. Delete from Beginning");
+            System.out.println("5. Delete from End");
+            System.out.println("6. Delete from Position");
+            System.out.println("7. Display Forward");
+            System.out.println("8. Display Reverse");
+            System.out.println("9. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = sc.nextInt();
+
+            if (choice == 1) {
+                System.out.print("Enter value: ");
+                list.insertAtBeginning(sc.nextInt());
+            } else if (choice == 2) {
+                System.out.print("Enter value: ");
+                list.insertAtEnd(sc.nextInt());
+            } else if (choice == 3) {
+                System.out.print("Enter value: ");
+                int val = sc.nextInt();
+                System.out.print("Enter position: ");
+                int pos = sc.nextInt();
+                list.insertAtPosition(val, pos);
+            } else if (choice == 4) {
+                list.deleteFromBeginning();
+            } else if (choice == 5) {
+                list.deleteFromEnd();
+            } else if (choice == 6) {
+                System.out.print("Enter position to delete: ");
+                list.deleteFromPosition(sc.nextInt());
+            } else if (choice == 7) {
+                list.displayForward();
+            } else if (choice == 8) {
+                list.displayReverse();
+            } else if (choice == 9) {
+                System.out.println("Exiting...");
+                break;
+            } else {
+                System.out.println("Invalid choice.");
+            }
+        }
+    }
+}
+```
+
+---
+
+### 🧠 Sample Output
+
+```
+1. Insert at Beginning → 10
+2. Insert at End → 30
+3. Insert at Position (20 at 2) → 10 <-> 20 <-> 30
+4. Delete from Position 2 → 10 <-> 30
+5. Display Reverse → 30 <-> 10 <-> (tail)
 ```
 
 ---
