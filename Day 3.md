@@ -1388,3 +1388,401 @@ public class DoublyCircularLinkedListMain {
 ```
 
 ---
+
+### 🌳 **Binary Search Tree in Java (Recursive)**
+
+```java
+class TreeNode {
+    int data;
+    TreeNode left, right;
+
+    TreeNode(int value) {
+        data = value;
+        left = right = null;
+    }
+}
+
+public class BSTree {
+    TreeNode root;
+
+    // Insert node using recursion
+    public TreeNode insert(TreeNode node, int value) {
+        if (node == null) {
+            return new TreeNode(value);
+        }
+
+        if (value < node.data) {
+            node.left = insert(node.left, value);
+        } else if (value > node.data) {
+            node.right = insert(node.right, value);
+        }
+
+        return node;
+    }
+
+    // In-order Traversal (Left, Root, Right)
+    public void inOrder(TreeNode node) {
+        if (node != null) {
+            inOrder(node.left);
+            System.out.print(node.data + " ");
+            inOrder(node.right);
+        }
+    }
+
+    // Pre-order Traversal (Root, Left, Right)
+    public void preOrder(TreeNode node) {
+        if (node != null) {
+            System.out.print(node.data + " ");
+            preOrder(node.left);
+            preOrder(node.right);
+        }
+    }
+
+    // Post-order Traversal (Left, Right, Root)
+    public void postOrder(TreeNode node) {
+        if (node != null) {
+            postOrder(node.left);
+            postOrder(node.right);
+            System.out.print(node.data + " ");
+        }
+    }
+
+    public static void main(String[] args) {
+        BSTree tree = new BSTree();
+
+        // Insert nodes into BST
+        int[] values = {50, 30, 70, 20, 40, 60, 80};
+        for (int v : values) {
+            tree.root = tree.insert(tree.root, v);
+        }
+
+        // Traversals
+        System.out.print("In-order: ");
+        tree.inOrder(tree.root);
+        System.out.println();
+
+        System.out.print("Pre-order: ");
+        tree.preOrder(tree.root);
+        System.out.println();
+
+        System.out.print("Post-order: ");
+        tree.postOrder(tree.root);
+        System.out.println();
+    }
+}
+```
+
+---
+
+### 🧾 Output:
+
+```
+In-order: 20 30 40 50 60 70 80
+Pre-order: 50 30 20 40 70 60 80
+Post-order: 20 40 30 60 80 70 50
+```
+
+---
+
+## 🔍 1. **Linear Search**
+
+### ✅ Concept:
+
+* Traverse the array from start to end
+* Compare each element with the target
+* Time Complexity: O(n)
+
+### 💻 Code:
+
+```java
+public class LinearSearch {
+    public static int search(int[] arr, int key) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == key) {
+                return i; // Found at index i
+            }
+        }
+        return -1; // Not found
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {10, 23, 45, 70, 11};
+        int key = 45;
+
+        int result = search(arr, key);
+        if (result != -1)
+            System.out.println("Element found at index: " + result);
+        else
+            System.out.println("Element not found.");
+    }
+}
+```
+
+---
+
+## 🔍 2. **Binary Search**
+
+### ✅ Concept:
+
+* Array must be **sorted**
+* Repeatedly divide the array in half
+* Time Complexity: O(log n)
+
+### 💻 Code:
+
+```java
+public class BinarySearch {
+    public static int search(int[] arr, int key) {
+        int low = 0;
+        int high = arr.length - 1;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            if (arr[mid] == key)
+                return mid;
+            else if (key < arr[mid])
+                high = mid - 1;
+            else
+                low = mid + 1;
+        }
+
+        return -1; // Not found
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 30, 40, 50, 60};
+        int key = 50;
+
+        int result = search(arr, key);
+        if (result != -1)
+            System.out.println("Element found at index: " + result);
+        else
+            System.out.println("Element not found.");
+    }
+}
+```
+
+---
+
+
+# **Sorting Algorithms** 
+
+## 🔢 **1. Bubble Sort**
+
+### 📌 Algorithm:
+
+* Repeatedly compare and swap adjacent elements if they're in the wrong order.
+
+### 💻 Java Code:
+
+```java
+public class BubbleSort {
+    public static void bubbleSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    // Swap
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+}
+```
+
+### 📈 Time Complexity:
+
+* Worst: O(n²), Best: O(n) (if already sorted)
+
+---
+
+## 🔢 **2. Selection Sort**
+
+### 📌 Algorithm:
+
+* Find the smallest element in the unsorted part and put it at the beginning.
+
+### 💻 Java Code:
+
+```java
+public class SelectionSort {
+    public static void selectionSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[minIndex])
+                    minIndex = j;
+            }
+
+            // Swap
+            int temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
+    }
+}
+```
+
+### 📈 Time Complexity:
+
+* O(n²) for all cases
+
+---
+
+## 🔢 **3. Insertion Sort**
+
+### 📌 Algorithm:
+
+* Take one element at a time and insert it in the correct position in the sorted part.
+
+### 💻 Java Code:
+
+```java
+public class InsertionSort {
+    public static void insertionSort(int[] arr) {
+        int n = arr.length;
+
+        for (int i = 1; i < n; i++) {
+            int key = arr[i];
+            int j = i - 1;
+
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+
+            arr[j + 1] = key;
+        }
+    }
+}
+```
+
+### 📈 Time Complexity:
+
+* Best: O(n), Worst: O(n²)
+
+---
+
+## 🔢 **4. Merge Sort (Divide and Conquer)**
+
+### 📌 Algorithm:
+
+* Divide the array into two halves, sort them recursively, then merge.
+
+### 💻 Java Code:
+
+```java
+public class MergeSort {
+    public static void mergeSort(int[] arr, int l, int r) {
+        if (l < r) {
+            int m = (l + r) / 2;
+
+            mergeSort(arr, l, m);
+            mergeSort(arr, m + 1, r);
+            merge(arr, l, m, r);
+        }
+    }
+
+    public static void merge(int[] arr, int l, int m, int r) {
+        int n1 = m - l + 1;
+        int n2 = r - m;
+
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        for (int i = 0; i < n1; i++)
+            L[i] = arr[l + i];
+
+        for (int j = 0; j < n2; j++)
+            R[j] = arr[m + 1 + j];
+
+        int i = 0, j = 0, k = l;
+
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j])
+                arr[k++] = L[i++];
+            else
+                arr[k++] = R[j++];
+        }
+
+        while (i < n1)
+            arr[k++] = L[i++];
+
+        while (j < n2)
+            arr[k++] = R[j++];
+    }
+}
+```
+
+### 📈 Time Complexity:
+
+* O(n log n) in all cases
+
+---
+
+## 🔢 **5. Quick Sort**
+
+### 📌 Algorithm:
+
+* Pick a pivot, place it at the correct position, and sort both sides recursively.
+
+### 💻 Java Code:
+
+```java
+public class QuickSort {
+    public static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int pi = partition(arr, low, high);
+
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    public static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        // Swap pivot
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        return i + 1;
+    }
+}
+```
+
+### 📈 Time Complexity:
+
+* Best: O(n log n), Worst: O(n²), Average: O(n log n)
+
+---
+
+## 📊 Comparison Table
+
+| Algorithm      | Best Time  | Worst Time | Stable | In-place |
+| -------------- | ---------- | ---------- | ------ | -------- |
+| Bubble Sort    | O(n)       | O(n²)     | Yes    | Yes      |
+| Selection Sort | O(n²)     | O(n²)     | No     | Yes      |
+| Insertion Sort | O(n)       | O(n²)     | Yes    | Yes      |
+| Merge Sort     | O(n log n) | O(n log n) | Yes    | No       |
+| Quick Sort     | O(n log n) | O(n²)     | No     | Yes      |
+
+---
