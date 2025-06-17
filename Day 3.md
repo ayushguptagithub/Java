@@ -1785,3 +1785,70 @@ public class QuickSort {
 | Quick Sort     | O(n log n) | O(n²)     | No     | Yes      |
 
 ---
+
+
+### ✅ **Quick Sort to Sort an Array (No Recursion, Using Array as Stack)**
+
+```java
+public class QuickSortSimple {
+
+    static int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                int temp = arr[i]; arr[i] = arr[j]; arr[j] = temp;
+            }
+        }
+
+        int temp = arr[i + 1]; arr[i + 1] = arr[high]; arr[high] = temp;
+        return i + 1;
+    }
+
+    static void quickSort(int[] arr) {
+        int n = arr.length;
+        int[] stack = new int[n];
+
+        int top = -1;
+        stack[++top] = 0;
+        stack[++top] = n - 1;
+
+        while (top >= 0) {
+            int high = stack[top--];
+            int low = stack[top--];
+
+            int p = partition(arr, low, high);
+
+            if (p - 1 > low) {
+                stack[++top] = low;
+                stack[++top] = p - 1;
+            }
+
+            if (p + 1 < high) {
+                stack[++top] = p + 1;
+                stack[++top] = high;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = { 10, 7, 8, 9, 1, 5 };
+        quickSort(arr);
+
+        // Print the sorted array
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+    }
+}
+```
+
+---
+
+### 🔍 Output:
+
+```
+1 5 7 8 9 10
+```

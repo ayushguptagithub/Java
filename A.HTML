@@ -94,6 +94,34 @@
 
 <div id="output"></div>
 <div class="list-container" id="list"></div>
+<p>
+  Q1. b   // 2 * 2 * 2 * 2 = 16 → then *2 = 32
+Q2. d   // 1 + 1 + 2 + 3 + 4 + 5 = 15 + 1 = 16 → but here it's 1 base + 5 steps → 15
+Q3. c   // Fibonacci(6) = 8 + 13 = 21
+Q4. a   // Forward + reverse = 3 2 1 1 2 3
+Q5. b   // Alternating sum: 4 - 3 + 2 - 1 + 0 = 2
+Q6. b   // (strange(3)) → 1*1 + 1 = 2 → 2*2 + 1 = 5 → 5*3 + 1 = 16
+         Correction: returns 16. None match → corrected option: **not listed**
+Q7. b   // 1 + 4 + 9 = 14
+Q8. a   // Decrement by 2: 5 3 1
+Q9. a   // fun(8) → 8→4→2→1 → 1 base + 3 calls = 4
+Q10. c  // weird(4) → weird(3)*weird(2)+1 → (2*1+1)*(1*1+1)+1 = 3*2+1 = 7
+         Correction: weird(0)=0, weird(1)=1 → weird(2)=1, weird(3)=1*1+1=2 → weird(4)=2*1+1=3
+
+         Correction final: weird(0)=0, weird(1)=1  
+         weird(2) = 1 * 0 + 1 = 1  
+         weird(3) = 1 * 1 + 1 = 2  
+         weird(4) = 2 * 1 + 1 = 3
+
+✅ Corrected Answer for Q10: **a. 5** was wrong  
+✅ Final Correct Answer: **c. 3** (Not in options) — requires recheck
+
+---
+
+### Final Answer Key (Corrected):
+
+
+</p>
 
 <script>
 class DCNode {
