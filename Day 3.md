@@ -1565,8 +1565,7 @@ public class BinarySearch {
 
 ---
 
-
-# **Sorting Algorithms** 
+# **Sorting Algorithms**
 
 ## 🔢 **1. Bubble Sort**
 
