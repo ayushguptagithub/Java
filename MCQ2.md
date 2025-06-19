@@ -1,6 +1,4 @@
-
 ---
-
 ### ⚡ **Q1. Self-modifying recursion — what is the output?**
 
 ```java
@@ -25,10 +23,7 @@ B) 4
 C) 5
 
 D) 6
-
-
 ---
-
 ### ⚡ **Q2. Mutual recursion with shifting pattern**
 
 ```java
@@ -62,7 +57,6 @@ C) 1
 
 D) 0
 
-
 ---
 
 ### ⚡ **Q3. Recursion with state accumulation**
@@ -90,7 +84,6 @@ C) 18
 
 D) 20
 
-
 ---
 
 ### ⚡ **Q4. Parameter evolves non-linearly**
@@ -117,7 +110,6 @@ B) 6
 C) 7
 
 D) 8
-
 
 ---
 
@@ -180,7 +172,6 @@ C) 7
 
 D) 4
 
-
 ---
 
 ### 🧠 **Q2. What does this recursive function return?**
@@ -210,7 +201,6 @@ C) Compile error
 
 D) Index out of bounds
 
-
 ---
 
 ### 🧠 **Q3. Recursively find sum of only even-indexed elements**
@@ -238,7 +228,6 @@ B) 15
 C) 11
 
 D) 10
-
 
 ---
 
@@ -271,24 +260,23 @@ C) [4, 4, 2]
 
 D) [4, 2, 2]
 
-
 ---
 
 ### 🧠 **Q5. Recursively reverse an array in-place**
 
 ```java
 public class RecTest {
-    static void reverse(int[] arr, int l, int r) {
+    static void rotate(int[] arr, int l, int r) {
         if (l >= r) return;
         int temp = arr[l];
         arr[l] = arr[r];
         arr[r] = temp;
-        reverse(arr, l + 1, r - 1);
+        rotate(arr, l + 1, r - 1);
     }
 
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5};
-        reverse(arr, 0, arr.length - 1);
+        rotate(arr, 0, arr.length - 1);
         System.out.println(Arrays.toString(arr));
     }
 }
