@@ -201,32 +201,43 @@ D) Depends on JVM
 
 ---
 
-### 🔸 **MCQ 4: Thread Start Mystery**
+### 🔸 **MCQ 4: Over Loading**
 
 ```java
-class A extends Thread {
-    public void run() {
-        System.out.println("Run");
+
+
+---
+
+### 🔸 **Overloading with Type Promotion**
+
+```java
+public class OverloadSimple {
+
+    void show(int a) {
+        System.out.println("int");
     }
-}
-public class Main {
+
+    void show(double a) {
+        System.out.println("double");
+    }
+
     public static void main(String[] args) {
-        A obj = new A();
-        obj.run();
-        System.out.println("Main");
+        OverloadSimple obj = new OverloadSimple();
+        obj.show(10.5f);
     }
 }
 ```
 
-🔹 Options:
+---
 
-A) Run Main
+### 🔹 Options:
 
-B) Main Run
+A) int
+B) double
+C) float
+D) Compile-time error
+E) Ambiguous
 
-C) Main only
-
-D) Run only
 
 ---
 
